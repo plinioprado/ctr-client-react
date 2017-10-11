@@ -1,32 +1,26 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
+import { getUsers } from '../../redux/modules/user'
 import Users from './Users'
 
 class UserContainer extends Component {
 
-  list = [
-    {
-      id: 1,
-      email: 'john@example.com',
-      name: 'John Smith'
-    },
-    {
-      id: 1,
-      email: 'mary@example.com',
-      name: 'Mary Smith'
-    },
-    {
-      id: 1,
-      email: 'paul@example.com',
-      name: 'Paul Black'
-    }
-  ]
+  componentDidMount() {
+    this.props.dispatch(getUsers())
+  }
 
   render() {
     return (
-      <Users list={this.list} />
+      <Users list={this.props.list} />
     )
   }
 }
 
-export default UserContainer
+function mapStateToProps(state) {
+  return {
+    list: state.user.list
+  }
+}
+
+export default connect(mapStateToProps)(UserContainer)
