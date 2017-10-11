@@ -3,11 +3,24 @@
 Controls:
 * Users
 
+
+
+# Stack
+
+Frontend
+* React/Redux
+
+boilerplate from react-create-app
+Coding stantards redux.js.org
+* Yarn installed but used only npm
 ## Style
 
 Immaginare identity
 
-## Notes
+## Test
 
-* boilerplate from react-create-app
-* Yarn installed but used only npm
+* Run in local server:
+```
+$ npm run start
+```
+* This script will open browser on localhost:3000

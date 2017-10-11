@@ -9,7 +9,7 @@ header {
 }
 
 main {
-  min-height: 400px;
+  min-height: calc(90vh - 30px);
 }
 
 footer {

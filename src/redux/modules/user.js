@@ -5,7 +5,7 @@ export const GET_USERS = 'GET_USERS'
 export function getUsers() {
   return {
     type: GET_USERS,
-    users: [
+    list: [
         {
           id: 1,
           email: 'john@example.com',
@@ -33,7 +33,7 @@ export function userReducer(state = initialState, action) {
     case 'GET_USERS':
       return {
         ...state,
-        list: action.users
+        list: action.list
       }
     default:
       return state
