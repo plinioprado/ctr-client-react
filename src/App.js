@@ -1,16 +1,34 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux'
+import { Route } from 'react-router'
+import { ConnectedRouter } from 'react-router-redux'
 
-import Layout from './components/Layout'
+import Header from './components/Header'
+import Login from './containers/Login'
+import Users from './containers/Users'
+import Footer from './components/Footer'
 import './App.css';
-import store from './redux/store'
+
+import store, { history } from './redux/store'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Provider store={store}>
-          <Layout />
+        <div>
+          <ConnectedRouter history={history}>
+          <div>
+            <Header />
+            <content>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/user" component={Users} />
+            </content>
+            <Footer />
+          </div>
+          </ConnectedRouter>
+
+          </div>
         </Provider>
       </div>
     )
