@@ -20,10 +20,10 @@ class App extends Component {
           <ConnectedRouter history={history}>
           <div>
             <Header />
-            <content>
+            <main>
               <Route exact path="/" component={Login} />
               <Route exact path="/user" component={Users} />
-            </content>
+            </main>
             <Footer />
           </div>
           </ConnectedRouter>
