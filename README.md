@@ -19,8 +19,10 @@ Immaginare identity
 
 ## Test
 
-* Run in local server:
+* Run local service server ctr-client-node
+
+* Run in local client server:
 ```
 $ npm run start
 ```
-* This script will open browser on localhost:3000
+* Client server will open browser on localhost:3000

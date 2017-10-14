@@ -19,8 +19,12 @@ class UserList extends Component {
       :
       <table>
         <thead>
-          <th>Email</th>
-          <th>Name</th>
+          <tr>
+            <th key="email">Email</th>
+            <th key="name">Name</th>
+            <th key="std">Std</th>
+            <th key="active">Active</th>
+          </tr>
         </thead>
         <tbody>
         {

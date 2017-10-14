@@ -1,9 +1,11 @@
 import React from 'react'
 
 const UserItem = ({ item }) => (
-  <tr>
-    <td>{item.email}</td>
-    <td>{item.name}</td>
+  <tr key={item.id}>
+    <td key="email">{item.email}</td>
+    <td key="name">{item.name}</td>
+    <td key="std">{item.std}</td>
+    <td key="active">{item.active ? 'Yes' : 'No'}</td>
   </tr>  
 )
 

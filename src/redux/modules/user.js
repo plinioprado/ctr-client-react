@@ -1,39 +1,54 @@
 // Action creators
 
-export const GET_USERS = 'GET_USERS'
+export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'
+export const GET_USERS_ERROR = 'GET_USERS_ERROR'
 
 export function getUsers() {
-  return {
-    type: GET_USERS,
-    list: [
-        {
-          id: 1,
-          email: 'john@example.com',
-          name: 'John Smith'
-        },
-        {
-          id: 1,
-          email: 'mary@example.com',
-          name: 'Mary Smith'
-        }
-      ]
+
+  return dispatch => {
+
+    fetch('http://localhost:4000/api/user', {
+      method: 'get',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
+      })
+      .then(res => res.json())
+      .then(json => dispatch(getUsersSuccess(json)))
+      .catch(err => dispatch(getUsersError(err)))
   }
 }
+
+const getUsersSuccess = data => ({
+  type: GET_USERS_SUCCESS,
+  list: data
+})
+
+const getUsersError = err => ({
+  type: GET_USERS_ERROR,
+  error: err
+})
 
 // Reducers
 
 const initialState = {
   list: [],
-  error: {},
+  error: null,
   isLoading: false
 }
 
 export function userReducer(state = initialState, action) {
   switch (action.type) {
-    case 'GET_USERS':
+    case 'GET_USERS_SUCCESS':
       return {
-        ...state,
-        list: action.list
+
+        list: action.list,
+        error: null,
+        isLoading: false
+      }
+    case 'GET_USERS_ERROR':
+      return {
+        list: [],
+        error: action.error,
+        isLoading: false
       }
     default:
       return state

@@ -10,7 +10,7 @@ const Login = ({
   handlePassChange
 }) => (
   <div className="loginForm">
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} noValidate>
       <div>
       <label>
         Email:
@@ -26,7 +26,6 @@ const Login = ({
       <div>
       <input type="submit" value="Ok" />
       </div>
-      <div>l:{logged.toString()}</div>
     </form>
   </div>
 )
