@@ -10,9 +10,11 @@ Controls:
 Frontend
 * React/Redux
 
-boilerplate from react-create-app
-Coding stantards redux.js.org
-* Yarn installed but used only npm
+Comments;
+* Initial boilerplate from react-create-app
+* Coding stantards redux.js.org plus dryer arrow functions
+* Yarn not uninstalled but but only npm was run
+
 ## Style
 
 Immaginare identity

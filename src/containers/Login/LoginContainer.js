@@ -22,28 +22,25 @@ class LoginContainer extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    console.log('data', this.state)
     this.props.login(this.state.email, this.state.pass)
   }
 
   handleEmailChange = (e) => {
-    console.log('handleEmailChange')
     this.setState({email: e.target.value})
   }
 
   handlePassChange = (e) => {
-    console.log('handlePassChange')
     this.setState({pass: e.target.value})
   }
 
   render() {
     return (
-      this.props.session === null ?
+      (this.props.session === null || this.props.session.error !== null)  ?
       <Login
         handleSubmit={e => this.handleSubmit(e)}
         email={this.state.email}
         pass={this.state.pass}
-        logged={this.props.session !== null}
+        error={this.props.session ? this.props.session.error : null}
         handleEmailChange={e => this.handleEmailChange(e)}
         handlePassChange={e => this.handlePassChange(e)}
       />

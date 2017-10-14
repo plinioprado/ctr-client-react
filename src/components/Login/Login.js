@@ -5,7 +5,7 @@ const Login = ({
   handleSubmit,
   email,
   pass,
-  logged,
+  error,
   handleEmailChange,
   handlePassChange
 }) => (
@@ -26,6 +26,10 @@ const Login = ({
       <div>
       <input type="submit" value="Ok" />
       </div>
+      {
+        error &&
+        <p>{error}</p>
+      }
     </form>
   </div>
 )
