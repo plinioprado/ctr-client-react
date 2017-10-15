@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 
+import Config from './containers/Config'
 import Header from './components/Header'
 import Login from './containers/Login'
 import Users from './containers/Users'
@@ -23,6 +24,7 @@ class App extends Component {
             <main>
               <Route exact path="/" component={Login} />
               <Route exact path="/user" component={Users} />
+              <Route exact path="/config" component={Config} />
             </main>
             <Footer />
           </div>

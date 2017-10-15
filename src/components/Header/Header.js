@@ -3,10 +3,16 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import './styles.css'
 
-const Header = (state) => (
+const Header = (session) => (
   <header>
-    <Link to="/user" className="menuItem">Users</Link>
-    <Link to="/" className="menuItem">{ (state === null) ? 'Login' : 'Logout' }</Link>
+    {
+      session &&
+      <div>
+        <Link to="/user" className="menuItem">Users</Link>
+        <Link to="/config" className="menuItem">Config</Link>
+      </div>
+    }
+    <Link to="/" className="menuItem">{ session ? 'Logout' : 'Login' }</Link>
   </header>
 )
 

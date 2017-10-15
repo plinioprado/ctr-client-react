@@ -22,11 +22,10 @@ export function login(email, pass) {
           console.log('login done2', json)
           dispatch(loginSuccess(json))}
         )
-        .catch(err => dispatch(loginError(err || 'error')))
-      //if (email !== 'john@example.com' || pass !== '123456') throw new Error('invalid login')
+        .catch(err => { throw err })
 
-      //dispatch(loginSuccess({user: { email }}))
     } catch(error) {
+      console.log('error', error)
       dispatch(loginError(error || 'error'))
     }    
   }
