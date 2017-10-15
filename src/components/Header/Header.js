@@ -9,6 +9,7 @@ const Header = (session) => (
       session &&
       <div>
         <Link to="/user" className="menuItem">Users</Link>
+        <Link to="/invoice" className="menuItem">Invoices</Link>
         <Link to="/config" className="menuItem">Config</Link>
       </div>
     }
