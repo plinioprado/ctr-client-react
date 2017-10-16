@@ -17,21 +17,24 @@ class UserList extends Component {
       list.length === 0 ?
       <p>Loading</p>
       :
-      <table>
-        <thead>
-          <tr>
-            <th key="email">Email</th>
-            <th key="name">Name</th>
-            <th key="std">Std</th>
-            <th key="active">Active</th>
-          </tr>
-        </thead>
-        <tbody>
-        {
-          list.map(item => <UserItem item={item} />)
-        }
-        </tbody>
-      </table>      
+      <div>
+        <h2>Users</h2>
+        <table className="table">
+          <thead>
+            <tr>
+              <th key="email">Email</th>
+              <th key="name">Name</th>
+              <th key="std">Std</th>
+              <th key="active">Active</th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            list.map(item => <UserItem item={item} />)
+          }
+          </tbody>
+        </table>
+      </div>
     )
   }
 }

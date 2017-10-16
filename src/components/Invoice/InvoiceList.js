@@ -5,7 +5,7 @@ import InvoiceItem from './InvoiceItem'
  const InvoiceList = ({ list }) => (
      <div>
       <h2>Invoices and revenues</h2>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th key="doc">Doc</th>

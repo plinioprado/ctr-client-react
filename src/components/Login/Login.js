@@ -9,7 +9,7 @@ const Login = ({
   handleEmailChange,
   handlePassChange
 }) => (
-  <div className="loginForm">
+  <div className="form loginForm">
     <form onSubmit={handleSubmit} noValidate>
       <div>
       <label>
@@ -19,12 +19,14 @@ const Login = ({
       </div>
       <div>
       <label>
+        <br />
         Pass:
       <input type="password" value={pass} onChange={handlePassChange} />
       </label>
       </div>
       <div>
-      <input type="submit" value="Ok" />
+      <br />
+      <button type="submit" value="Ok" className="btn btn-primary">Ok</button>
       </div>
       {
         error &&

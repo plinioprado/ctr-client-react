@@ -1,3 +1,14 @@
+a:link {
+  color: #000;
+}
+
+a:hover {
+  color: #000;
+}
+ a:visited {
+  color: #000;
+ }
+
 body {
   margin: 0;
   padding: 0;
@@ -16,10 +27,98 @@ main {
   padding-left: 20px;
   padding-right: 20px;
   margin-bottom: 10px;
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 110px);
 }
 
 footer {
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   height: 30px;
   border-top: 1px solid #000;  
+  text-align: right;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+.table {
+  width: 100%;
+}
+
+
+.table th {
+  text-align: left;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  padding: 10px;
+  margin: 0;
+}
+
+.table td {
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  padding: 10px;
+  margin: 0;
+}
+
+.header-menu a {
+  text-decoration: none;
+}
+
+.val {
+  text-align: right;
+}
+
+/* Material design */
+
+.btn {
+  font-weight: 500; 
+  transition: all .2s ease-in-out;
+  display: inline-block;
+  height: 36px;
+  padding: 0 26px;
+  margin: 6px 0;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  touch-action: manipulation;
+  background-image: none;
+  text-align: center;
+  line-height: 36px;
+  vertical-align: middle;
+  white-space: nowrap;
+  user-select: none;
+  font-size: 14px;
+  font-family: inherit;
+  letter-spacing: .03em;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  color: #FFF;
+  background-color: #2196F3;
+}
+
+.form input {
+  box-sizing: border-box;
+  display: block;
+  background-color: transparent;
+  color: rgba(0,0,0,.87);
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.26);
+  outline: 0;
+  width: 100%;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+  font-size: 16px;
+  font-family: inherit;
+  line-height: inherit;
+  background-image: none;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.004);
+}
+
+.form input:focus {
+  border-bottom: 2px solid #2196F3;
 }

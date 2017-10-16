@@ -10,13 +10,15 @@ const Header = (session) => (
     <img src={logo} alt="logo" className="logo" />
     {
       session &&
-      <div>
+      <div className="header-menu">
         <Link to="/user" className="menuItem">Users</Link>
         <Link to="/invoice" className="menuItem">Invoices</Link>
         <Link to="/config" className="menuItem">Config</Link>
       </div>
     }
-    <Link to="/" className="menuItem">{ session ? 'Logout' : 'Login' }</Link>
+    <div className="header-menu">
+      <Link to="/" className="menuItem">{ session ? 'Logout' : 'Login' }</Link>
+    </div>
   </header>
 )
 
