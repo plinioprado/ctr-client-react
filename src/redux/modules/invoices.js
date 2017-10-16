@@ -2,7 +2,9 @@
 
 const GET_INVOICE_BEGIN = 'GET_INVOICE_BEGIN'
 const GET_INVOICES_SUCCESS = 'GET_INVOICES_SUCCESS'
-const GET_INVOICE_ERROR = 'GET_INVOICE_ERROR'
+const GET_INVOICE_SUCCESS = 'GET_INVOICE_SUCCESS'
+const UPD_INVOICE_SUCCESS = 'UPD_INVOICE_SUCCESS'
+const INVOICE_ERROR = 'INVOICE_ERROR'
 
 export const getInvoices = () => {
   return dispatch => {
@@ -19,6 +21,39 @@ export const getInvoices = () => {
   }
 }
 
+export const updInvoice = (data) => {
+  return dispatch => {
+    dispatch(updInvoiceSuccess(data))
+  }
+}
+
+const updInvoiceSuccess = (data) => {
+  return {
+    type: UPD_INVOICE_SUCCESS
+  }
+}
+
+export const getInvoice = (id) => {
+  return dispatch => {
+    try {
+      fetch('http://localhost:4000/api/recins/'+id)
+        .then(res => res.json())
+        .then(json => dispatch(getInvoiceSuccess(json)))
+        .catch(err => { throw err })
+    } catch(error) {
+      console.log('error', error)
+      dispatch(getInvoiceError(error))
+    }
+  }
+}
+
+export const getInvoiceSuccess = (data) => {
+  return {
+    type: GET_INVOICE_SUCCESS,
+    data
+  }
+}
+
 const getInvoiceBegin = () => ({
   type: GET_INVOICE_BEGIN
 })
@@ -29,7 +64,7 @@ const getInvoicesSuccess = (data) => ({
 })
 
 const getInvoiceError = (error) => ({
-  type: GET_INVOICE_ERROR,
+  type: INVOICE_ERROR,
   error
 })
 
@@ -38,29 +73,41 @@ const getInvoiceError = (error) => ({
 const initialState = {
   list: [],
   error: null,
-  isLoading: false
+  isLoading: false,
+  selected: null
 }
 
 export const invoiceReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_INVOICE_BEGIN':
     return {
+      ...state,
       list: [],
-      error: null,
       isLoading: true
       }
-    case 'GET_INVOICES_SUCCESS':
+      case 'GET_INVOICES_SUCCESS':
       return {
+        ...state,
         list: action.data,
-        error: null,
         isLoading: false
         }
-    case 'GET_INVOICE_ERROR':
+    case 'GET_INVOICE_SUCCESS':
+        return {
+            ...state,
+            selected: action.data,
+            isLoading: false
+          }
+    case 'INVOICE_ERROR':
       return {
-        list: [],
+        ...state,
         error: action.error,
         isLoading: false
         }
+    case 'UPD_INVOICE_SUCCESS':
+        return {
+          ...state,
+          selected: null
+          }
     default:
       return state
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getInvoices } from '../../redux/modules/invoices'
+import { getInvoices, getInvoice, updInvoice } from '../../redux/modules/invoices'
 
 import Invoice from '../../components/Invoice'
 
@@ -10,17 +11,30 @@ class InvoiceContainer extends Component {
    this.props.getInvoices()
   }
 
+  onSelect = (id) => this.props.getInvoice(id)
+
+  onModalSubmit = (data) => this.props.updInvoice(data)
+
   render() {
-    console.log('this.props.invoice', this.props.invoice)
     return (
       this.props.invoice.isLoading ?
       <p>Loading</p>
       :
       <Invoice
-      list={this.props.invoice.list} />
+        list={this.props.invoice.list}
+        selected={this.props.invoice.selected}
+        onSelect={(id) => this.onSelect(id)}
+        onModalSubmit={(data) => this.onModalSubmit(data)}
+      />
     )
-
   }
+}
+
+InvoiceContainer.PropTypes = {
+  getInvoices: PropTypes.func.isRequired,
+  getInvoice: PropTypes.func.isRequired,
+  updInvoice: PropTypes.func.isRequired,
+  invoice: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {
@@ -31,7 +45,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getInvoices: () => dispatch(getInvoices())
+    getInvoices: () => dispatch(getInvoices()),
+    getInvoice: (id) => dispatch(getInvoice(id)),
+    updInvoice: (data) => dispatch(updInvoice(data))
   }
 }
 

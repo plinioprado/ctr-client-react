@@ -1,8 +1,9 @@
 import React from 'react'
 
 import InvoiceItem from './InvoiceItem'
+import InvoiceModal from './InvoiceModal'
    
- const InvoiceList = ({ list }) => (
+ const InvoiceList = ({ list, selected, onSelect, onModalSubmit }) => (
      <div>
       <h2>Invoices and revenues</h2>
       <table className="table">
@@ -18,10 +19,18 @@ import InvoiceItem from './InvoiceItem'
         <tbody>
           {
             list.length &&  
-            list.map(item => <InvoiceItem key={item.cod} item={item} />)
+            list.map(item => <InvoiceItem
+                key={item.cod}
+                item={item}
+                onSelect={(id) => onSelect(id)}
+              />)
           }
         </tbody>
       </table>
+      {
+        selected &&
+        <InvoiceModal selected={selected} className="modal" modalSubmit={(data) => onModalSubmit(data)} />
+      }
      </div>
    )
 
