@@ -1,10 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+
+import logo from '../../assets/images/logo.png'
 import './styles.css'
 
 const Header = (session) => (
   <header>
+    <img src={logo} alt="logo" className="logo" />
     {
       session &&
       <div>

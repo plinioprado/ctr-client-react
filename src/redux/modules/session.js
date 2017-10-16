@@ -14,12 +14,10 @@ export function login(email, pass) {
         body: JSON.stringify({email, pass})
         })
         .then(res => {
-          console.log('login done1', res)
           if (res.status !== 200) throw `${res.statusText} (${res.status})`
           return res.json()}
         )
         .then(json => {
-          console.log('login done2', json)
           dispatch(loginSuccess(json))}
         )
         .catch(err => { throw err })

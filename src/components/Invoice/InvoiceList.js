@@ -1,19 +1,25 @@
 import React from 'react'
 
 import InvoiceItem from './InvoiceItem'
-
- const InvoiceList = (list) => (
+   
+ const InvoiceList = ({ list }) => (
      <div>
-      <h2>Invoices</h2>
+      <h2>Invoices and revenues</h2>
       <table>
         <thead>
           <tr>
-            <th key="cod">Cod</th>
-            <th key="val">Val</th>
+            <th key="doc">Doc</th>
+            <th key="cliCod">Cod</th>
+            <th key="cliName">Client</th>
+            <th key="dt">Date</th>
+            <th key="val">Value</th>
           </tr>
         </thead>
         <tbody>
-          { list.list.map(item => <InvoiceItem key={item.cod} item={item} />) }
+          {
+            list.length &&  
+            list.map(item => <InvoiceItem key={item.cod} item={item} />)
+          }
         </tbody>
       </table>
      </div>

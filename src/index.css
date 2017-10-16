@@ -4,12 +4,19 @@ body {
 }
 
 header {
-  height: 50px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 40px;
   border-bottom: 1px solid #000;
 }
 
 main {
-  min-height: calc(90vh - 30px);
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+  min-height: calc(100vh - 100px);
 }
 
 footer {

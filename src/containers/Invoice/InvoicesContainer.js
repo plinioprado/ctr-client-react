@@ -1,21 +1,39 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { getInvoices } from '../../redux/modules/invoices'
 
 import Invoice from '../../components/Invoice'
 
 class InvoiceContainer extends Component {
 
+  componentDidMount() {
+   this.props.getInvoices()
+  }
+
   render() {
-    const list = [{cod: '1', val: 100}]
+    console.log('this.props.invoice', this.props.invoice)
     return (
-      list ?
-      <Invoice
-      list={list} />
+      this.props.invoice.isLoading ?
+      <p>Loading</p>
       :
-      <p>Loading</p>  
+      <Invoice
+      list={this.props.invoice.list} />
     )
 
   }
 }
 
-export default InvoiceContainer
+const mapStateToProps = state => {
+  return {
+    invoice: state.invoice
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getInvoices: () => dispatch(getInvoices())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvoiceContainer)
 
