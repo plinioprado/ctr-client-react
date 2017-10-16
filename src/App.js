@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'react-router-redux'
 
 import Config from './containers/Config'
 import Header from './components/Header'
+import Home from './components/Home'
 import Invoice from './containers/Invoice'
 import Login from './containers/Login'
 import Users from './containers/Users'
@@ -23,9 +24,10 @@ class App extends Component {
               <Header />
               <main>
                 <Route exact path="/" component={Login} />
-                <Route exact path="/invoice" component={Invoice} />
-                <Route exact path="/user" component={Users} />
                 <Route exact path="/config" component={Config} />
+                <Route exact path="/user" component={Users} />
+                <Route exact path="/invoice" component={Invoice} />
+                <Route exact path="/home" component={Home} />
               </main>
               <Footer />
             </div>

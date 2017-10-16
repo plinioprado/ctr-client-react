@@ -45,7 +45,7 @@ class LoginContainer extends Component {
         handlePassChange={e => this.handlePassChange(e)}
       />
       :
-      <Redirect to="/user" />
+      <Redirect to="/home" />
     )
   }
 }
