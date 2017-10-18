@@ -3,6 +3,7 @@
 const GET_INVOICE_BEGIN = 'GET_INVOICE_BEGIN'
 const GET_INVOICES_SUCCESS = 'GET_INVOICES_SUCCESS'
 const GET_INVOICE_SUCCESS = 'GET_INVOICE_SUCCESS'
+const RESET_INVOICE = 'RESET_INVOICE'
 const UPD_INVOICE_SUCCESS = 'UPD_INVOICE_SUCCESS'
 const INVOICE_ERROR = 'INVOICE_ERROR'
 
@@ -18,6 +19,12 @@ export const getInvoices = () => {
       console.log('error', error)
       dispatch(getInvoiceError(error))
     }
+  }
+}
+
+export const resetInvoice = () => {
+  return {
+    type: RESET_INVOICE
   }
 }
 
@@ -103,11 +110,16 @@ export const invoiceReducer = (state = initialState, action) => {
         error: action.error,
         isLoading: false
         }
+    case 'RESET_INVOICE':
+      return {
+        ...state,
+        selected: null
+        }
     case 'UPD_INVOICE_SUCCESS':
-        return {
-          ...state,
-          selected: null
-          }
+      return {
+        ...state,
+        selected: null
+        }
     default:
       return state
   }
