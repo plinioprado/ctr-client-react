@@ -28,7 +28,7 @@ class InvoiceModal extends Component {
 
   recList =  this.props.selected.recList.map(it => {
     const dateString2 = new Date(it.dtDue).toLocaleDateString()
-    const valString = new Number(this.props.selected.val).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
+    const valString = parseFloat(this.props.selected.val).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
     return (<li key={it._id}>{dateString2} : {valString}</li>)
   })
 

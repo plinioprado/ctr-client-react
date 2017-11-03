@@ -2,7 +2,7 @@ import React from 'react'
 
 const InvoiceItem = ({ item, onSelect }) => {
   const dateString = new Date(item.dt).toLocaleDateString()
-  const valString = new Number(item.val).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
+  const valString = parseFloat(item.val).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
   console.log('valString', valString)
   return (
     <tr>
