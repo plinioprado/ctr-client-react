@@ -1,8 +1,13 @@
 # Finance control - react client
 
+React version of the finance application originally coded in Angular 1.6
+
 Controls:
 * Users
+* Invoices
+* Config
 
+Served via REST by the the ctr_server_node backend
 
 
 # Stack
