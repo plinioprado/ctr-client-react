@@ -147,3 +147,7 @@ h2 {
 .modal-content nav button {
   margin-left: 10px;
 }
+
+.error-message {
+  color: #FF0000;
+}

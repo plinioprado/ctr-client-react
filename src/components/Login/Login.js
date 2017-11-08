@@ -30,7 +30,7 @@ const Login = ({
       </div>
       {
         error &&
-        <p>{error}</p>
+        <p className="error-message">{error}</p>
       }
     </form>
   </div>

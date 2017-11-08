@@ -12,7 +12,7 @@ class Header extends Component {
       <header>
         <img src={logo} alt="logo" className="logo" />
         {
-          this.props.session !== null &&
+          this.props.session === {} &&
           <div className="header-menu">
             <Link to="/user" className="menuItem">Users</Link>
             <Link to="/invoice" className="menuItem">Invoices</Link>
@@ -20,7 +20,7 @@ class Header extends Component {
           </div>
         }
         <div className="header-menu">
-          <Link to="/" className="menuItem">{ this.props.session !== null ? 'Logout' : 'Login' }</Link>
+          <Link to="/" className="menuItem">{ this.props.session === {} ? 'Login' : 'Logout' }</Link>
         </div>
       </header>
     )
