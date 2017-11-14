@@ -8,13 +8,18 @@ export function getUsers() {
 
   return dispatch => {
     dispatch(getUsersBegin())
-    fetch('http://localhost:4000/api/user', {
-      method: 'get',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
-      })
-      .then(res => res.json())
-      .then(json => dispatch(getUsersSuccess(json)))
-      .catch(err => dispatch(getUsersError(err)))
+    fetch('http://localhost:4000/api/user',
+      {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          'Authorization': '123321'
+        }
+      }
+    )
+    .then(res => res.json())
+    .then(json => dispatch(getUsersSuccess(json)))
+    .catch(err => dispatch(getUsersError(err)))
   }
 }
 

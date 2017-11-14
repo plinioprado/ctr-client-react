@@ -6,28 +6,22 @@ const LOGIN_ERROR = 'LOGIN_ERROR'
 
 export function login(email, pass) {
   return dispatch => {
-    // try {
-      fetch('http://localhost:4000/api/login', {
-        method: 'post',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-        body: JSON.stringify({email, pass})
-        })
-        .then(res => {
-          if (res.status !== 200) throw `${res.statusText} (${res.status})`
-          return res.json()}
-        )
-        .then(json => {
-          dispatch(loginSuccess(json))}
-        )
-        .catch(err => {
-          console.log('error at reducer', err);
-          dispatch(loginError(err.message || 'error'))
-        })
-
-    // } catch(error) {
-    //   console.log('error at reducer2', error);
-    //   dispatch(loginError(error || 'error2'))
-    // }    
+    fetch('http://localhost:4000/api/login', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: JSON.stringify({email, pass})
+      })
+      .then(res => {
+        if (res.status !== 200) throw `${res.statusText} (${res.status})`
+        return res.json()}
+      )
+      .then(json => {
+        dispatch(loginSuccess(json))}
+      )
+      .catch(err => {
+        console.log('error at reducer', err);
+        dispatch(loginError(err.message || 'error'))
+      })
   }
 }
 
@@ -62,6 +56,9 @@ export function sessionReducer(state = initialState, action) {
     case 'LOGIN_SUCCESS':
       return {
         ...state,
+        entity: action.session.entity,
+        user: action.session.user,
+        token: action.session.token,
         error: null
       }
     case 'LOGIN_ERROR':

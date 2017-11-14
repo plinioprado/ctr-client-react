@@ -11,10 +11,19 @@ export const getInvoices = () => {
   return dispatch => {
     try {
       dispatch(getInvoiceBegin())
-      fetch('http://localhost:4000/api/recins')
-        .then(res => res.json())
-        .then(json => dispatch(getInvoicesSuccess(json)))
-        .catch(err => { throw err })
+      fetch(
+        'http://localhost:4000/api/recins',
+        {
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            'Authorization': '123321'
+          }
+        }
+      )
+      .then(res => res.json())
+      .then(json => dispatch(getInvoicesSuccess(json)))
+      .catch(err => { throw err })
     } catch(error) {
       console.log('error', error)
       dispatch(getInvoiceError(error))

@@ -6,8 +6,8 @@ import Config from '../../components/Config'
 class ConfigContainer extends Component {
 
   render() {
-    const entity = this.props.session ? this.props.session.entity : {}
-    const user = this.props.session ? this.props.session.user : {}
+    const entity = this.props.session.entity ? this.props.session.entity : {}
+    const user = this.props.session.user ? this.props.session.user : {}
     return <Config
       entity={entity}
       user={user}

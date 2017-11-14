@@ -11,17 +11,17 @@ class Header extends Component {
     return(
       <header>
         <img src={logo} alt="logo" className="logo" />
-        {
-          this.props.session === {} &&
-          <div className="header-menu">
-            <Link to="/user" className="menuItem">Users</Link>
-            <Link to="/invoice" className="menuItem">Invoices</Link>
-            <Link to="/config" className="menuItem">Config</Link>
-          </div>
-        }
         <div className="header-menu">
           <Link to="/" className="menuItem">{ this.props.session === {} ? 'Login' : 'Logout' }</Link>
         </div>
+        {
+          this.props.session !== {} &&
+          <div className="header-menu">
+            <Link to="/config" className="menuItem">Config</Link>
+            <Link to="/user" className="menuItem">Users</Link>
+            <Link to="/invoice" className="menuItem">Invoices</Link>
+          </div>
+        }
       </header>
     )
   }
