@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "history": "^4.7.2",
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.7.2",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.14.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
@@ -34,5 +34,17 @@
   "bugs": {
     "url": "https://github.com/plinioprado/ctr-client-react/issues"
   },
-  "homepage": "https://github.com/plinioprado/ctr-client-react#readme"
+  "homepage": "https://github.com/plinioprado/ctr-client-react#readme",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
