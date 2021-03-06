@@ -8,6 +8,7 @@ class ConfigContainer extends Component {
   render() {
     const entity = this.props.session.entity ? this.props.session.entity : {}
     const user = this.props.session.user ? this.props.session.user : {}
+    console.log('entity=', entity);
     return <Config
       entity={entity}
       user={user}

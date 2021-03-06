@@ -3,7 +3,7 @@ import React from 'react'
 import InvoiceItem from './InvoiceItem'
 import InvoiceModal from './InvoiceModal'
    
- const InvoiceList = ({ list, selected, onSelect, onModalCancel, onModalSubmit }) => (
+ const InvoiceList = ({ list, invoice, onSelect, onModalCancel, onModalSubmit }) => (
      <div>
       <h2>Invoices and revenues</h2>
       <table className="table">
@@ -28,9 +28,9 @@ import InvoiceModal from './InvoiceModal'
         </tbody>
       </table>
       {
-        selected &&
+        invoice &&
         <InvoiceModal
-          selected={selected}
+          invoice={invoice}
           className="modal"
           onModalCancel={() => onModalCancel()}
           onModalSubmit={(data) => onModalSubmit(data)}
