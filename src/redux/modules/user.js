@@ -1,5 +1,7 @@
 // Action creators
 
+import config from '../../config.json'
+
 export const GET_USERS_BEGIN = 'GET_USERS_BEGIN'
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS'
 export const GET_USERS_ERROR = 'GET_USERS_ERROR'
@@ -8,7 +10,7 @@ export function getUsers() {
 
   return dispatch => {
     dispatch(getUsersBegin())
-    fetch('http://localhost:4000/api/user',
+    fetch(`${config.requestUrlBase}/user`,
       {
         method: 'get',
         headers: {

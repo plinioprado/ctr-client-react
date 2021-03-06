@@ -6,19 +6,20 @@ class InvoiceModal extends Component {
 
   constructor(props) {
     super(props)
-    const dtString = new Date(props.selected.dt).toLocaleDateString()
+    const dtString = new Date(props.invoice.dt).toLocaleDateString()
     this.state = {
-      cod: props.selected.cod,
-      val: props.selected.val,
-      std: props.selected.std,
+      cod: props.invoice.cod,
+      val: props.invoice.val,
+      std: props.invoice.std,
       dtString: dtString,
-      cpName: props.selected.cp.name,
-      cpCod: props.selected.cp.cod,
-      cpAddressAddr: props.selected.cp.address.addr,
-      cpAddressCity: props.selected.cp.address.city,
-      cpAddressNeigh: props.selected.cp.address.neigh,
-      cpAddressState: props.selected.cp.address.state,
-      cpAddressZip: props.selected.cp.address.zip
+      cpName: props.invoice.cp.name,
+      cpCod: props.invoice.cp.cod,
+      cpAddressAddr: props.invoice.cp.address.addr,
+      cpAddressCity: props.invoice.cp.address.city,
+      cpAddressNeigh: (props.invoice.cp.address.neigh || null),
+      cpAddressState: props.invoice.cp.address.state,
+      cpAddressZip: props.invoice.cp.address.zip,
+      cpAddressCountry: props.invoice.cp.address.country
     }
   }
 
@@ -26,14 +27,14 @@ class InvoiceModal extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
-  recList =  this.props.selected.recList.map(it => {
+  recList =  this.props.invoice.recList.map(it => {
     const dateString2 = new Date(it.dtDue).toLocaleDateString()
-    const valString = parseFloat(this.props.selected.val).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
+    const valString = parseFloat(this.props.invoice.val).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
     return (<li key={it._id}>{dateString2} : {valString}</li>)
   })
 
   render() {
-    const selected = this.props.selected
+    //const invoice = this.props.invoice
     return (
       <div className="modal form">
         <form>
@@ -91,12 +92,14 @@ class InvoiceModal extends Component {
               <input name="cpAddressCity" value={this.state.cpAddressCity} onChange={(e) => this.handleChange(e)} />
             </label>
           </div>
-          <div className="item-half">
-            <label>
-              Neighborhood:
-              <input name="cpAddressNeigh" value={this.state.cpAddressNeigh} onChange={(e) => this.handleChange(e)} />
-            </label>
-          </div>
+          { (this.state.cpAddressNeigh !== null) &&
+            <div className="item-half">
+              <label>
+                Neighborhood:
+                <input name="cpAddressNeigh" value={this.state.cpAddressNeigh} onChange={(e) => this.handleChange(e)} />
+              </label>
+            </div>
+          }
           <div className="item-half">
             <label>
               State:
@@ -109,17 +112,24 @@ class InvoiceModal extends Component {
               <input name="cpAddressZip" value={this.state.cpAddressZip} onChange={(e) => this.handleChange(e)} />
             </label>
           </div>
+          <div className="item-half">
+            <label>
+              Country:
+              <input name="cpCountry" value={this.state.cpAddressCountry} onChange={(e) => this.handleChange(e)} />
+            </label>
+          </div>
           <ul className="item">
             {this.recList}
           </ul>
           <nav className="item">
             <button type="button" className="btn btn-primary" onClick={(e) => {this.props.onModalCancel()}}>Cancel</button>
-            <button type="submit" className="btn btn-primary" onClick={(e) => {e.preventDefault(); this.props.onModalSubmit(selected)}}>Submit</button>
           </nav>
         </div>
         </form>
       </div>
     )
+    //<button type="submit" className="btn btn-primary" onClick={(e) => {e.preventDefault(); this.props.onModalSubmit(invoice)}}>Submit</button>
+
   }
 }
 

@@ -1,5 +1,7 @@
 // Actions
 
+import config from '../../config.json'
+
 const GET_INVOICE_BEGIN = 'GET_INVOICE_BEGIN'
 const GET_INVOICES_SUCCESS = 'GET_INVOICES_SUCCESS'
 const GET_INVOICE_SUCCESS = 'GET_INVOICE_SUCCESS'
@@ -12,7 +14,7 @@ export const getInvoices = () => {
     try {
       dispatch(getInvoiceBegin())
       fetch(
-        'http://localhost:4000/api/recins',
+        `${config.requestUrlBase}/invoice`,
         {
           method: 'get',
           headers: {
@@ -52,7 +54,7 @@ const updInvoiceSuccess = (data) => {
 export const getInvoice = (id) => {
   return dispatch => {
     try {
-      fetch('http://localhost:4000/api/recins/'+id)
+      fetch(`${config.requestUrlBase}/invoice/${id}`)
         .then(res => res.json())
         .then(json => dispatch(getInvoiceSuccess(json)))
         .catch(err => { throw err })
@@ -90,7 +92,7 @@ const initialState = {
   list: [],
   error: null,
   isLoading: false,
-  selected: null
+  invoice: null
 }
 
 export const invoiceReducer = (state = initialState, action) => {
@@ -110,7 +112,7 @@ export const invoiceReducer = (state = initialState, action) => {
     case 'GET_INVOICE_SUCCESS':
         return {
             ...state,
-            selected: action.data,
+            invoice: action.data,
             isLoading: false
           }
     case 'INVOICE_ERROR':
@@ -122,12 +124,12 @@ export const invoiceReducer = (state = initialState, action) => {
     case 'RESET_INVOICE':
       return {
         ...state,
-        selected: null
+        invoice: null
         }
     case 'UPD_INVOICE_SUCCESS':
       return {
         ...state,
-        selected: null
+        invoice: null
         }
     default:
       return state

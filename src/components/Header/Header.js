@@ -8,14 +8,15 @@ import './styles.css'
 class Header extends Component {
 
   render() {
+    const logged = (Object.keys(this.props.session).length !== 0)
     return(
       <header>
         <img src={logo} alt="logo" className="logo" />
         <div className="header-menu">
-          <Link to="/" className="menuItem">{ this.props.session === {} ? 'Login' : 'Logout' }</Link>
+          <Link to="/" className="menuItem">{ !logged ? 'Login' : 'Logout' }</Link>
         </div>
         {
-          this.props.session !== {} &&
+          logged &&
           <div className="header-menu">
             <Link to="/config" className="menuItem">Config</Link>
             <Link to="/user" className="menuItem">Users</Link>

@@ -18,13 +18,14 @@ class InvoiceContainer extends Component {
   onModalSubmit = (data) => this.props.updInvoice(data)
 
   render() {
+    console.log(this.props);
     return (
       this.props.invoice.isLoading ?
       <p>Loading</p>
       :
       <Invoice
         list={this.props.invoice.list}
-        selected={this.props.invoice.selected}
+        invoice={this.props.invoice.invoice}
         onSelect={(id) => this.onSelect(id)}
         onModalCancel={() => this.onModalCancel()}
         onModalSubmit={(data) => this.onModalSubmit(data)}

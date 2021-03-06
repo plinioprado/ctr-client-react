@@ -1,18 +1,20 @@
 // Action creators
 
+import config from '../../config.json'
+
 const LOGOUT = 'LOGOUT'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGIN_ERROR = 'LOGIN_ERROR'
 
 export function login(email, pass) {
   return dispatch => {
-    fetch('http://localhost:4000/api/login', {
+    fetch(`${config.requestUrlBase}/login`, {
       method: 'post',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: JSON.stringify({email, pass})
       })
       .then(res => {
-        if (res.status !== 200) throw `${res.statusText} (${res.status})`
+        if (res.status !== 200) throw new Error(`${res.statusText} (${res.status})`)
         return res.json()}
       )
       .then(json => {
