@@ -10,7 +10,7 @@ class InvoiceModal extends Component {
     this.state = {
       cod: props.invoice.cod,
       val: props.invoice.val,
-      std: props.invoice.std,
+      std: (props.invoice.std || ''),
       dtString: dtString,
       cpName: props.invoice.cp.name,
       cpCod: props.invoice.cp.cod,
