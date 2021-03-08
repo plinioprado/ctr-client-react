@@ -51,7 +51,9 @@ function loginError(error) {
 
 // Reducers
 
-const initialState = {};
+const initialState = {
+  alwaysLoged: ((config.alwaysLogged && config.alwaysLogged === true) || false)
+};
 
 export function sessionReducer(state = initialState, action) {
   switch(action.type) {
@@ -70,7 +72,7 @@ export function sessionReducer(state = initialState, action) {
         error: action.error
       }
     case 'LOGOUT':
-      return {};
+      return initialState;
     default:
       return state
   }
