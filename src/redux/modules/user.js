@@ -20,8 +20,13 @@ export function getUsers() {
       }
     )
     .then(res => res.json())
-    .then(json => dispatch(getUsersSuccess(json)))
+    .then(list => list.sort(compareNum))
+    .then(list => dispatch(getUsersSuccess(list)))
     .catch(err => dispatch(getUsersError(err)))
+
+    function compareNum(a, b) {
+      return a.num - b.num;
+    }
   }
 }
 
@@ -29,9 +34,9 @@ const getUsersBegin = () => ({
   type: GET_USERS_BEGIN
 })
 
-const getUsersSuccess = data => ({
+const getUsersSuccess = list => ({
   type: GET_USERS_SUCCESS,
-  list: data
+  list: list
 })
 
 const getUsersError = err => ({
