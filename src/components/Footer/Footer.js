@@ -1,5 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+class Footer extends Component {
+  render () {
+    let userName
+    if (this.props.session && this.props.session.user ) userName = this.props.session.user.name
+    else userName = ' '
 
-const Footer = () => (<footer>Footer</footer>)
+    return (<footer>{userName}</footer>)
+  }
+}
 
-export default Footer 
+const mapStateToProps = state => ({
+  session: state.session
+})
+
+export default connect(mapStateToProps)(Footer)
