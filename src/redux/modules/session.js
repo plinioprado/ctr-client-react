@@ -22,7 +22,8 @@ export function login(email, pass) {
       )
       .catch(err => {
         console.log('error at reducer', err);
-        dispatch(loginError(err.message || 'error'))
+        if (err.status = 403) dispatch(loginError('Error: Invalid login'))
+        else dispatch(loginError(err.message || 'error'))
       })
   }
 }
