@@ -7,10 +7,12 @@ const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGIN_ERROR = 'LOGIN_ERROR'
 
 export function login(email, pass) {
+  console.log('email=', email)
+  console.log('pass=', pass)
   return dispatch => {
     fetch(`${config.requestUrlBase}/login`, {
       method: 'post',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({email, pass})
       })
       .then(res => {
@@ -22,7 +24,7 @@ export function login(email, pass) {
       )
       .catch(err => {
         console.log('error at reducer', err);
-        if (err.status = 403) dispatch(loginError('Error: Invalid login'))
+        if (err.status === 403) dispatch(loginError('Error: Invalid login'))
         else dispatch(loginError(err.message || 'error'))
       })
   }
