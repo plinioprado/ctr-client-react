@@ -8,7 +8,7 @@ class InvoiceModal extends Component {
     super(props)
     const dtString = new Date(props.invoice.dt).toLocaleDateString()
     this.state = {
-      cod: props.invoice.cod,
+      cod: props.invoice.cod > 0 ? props.invoice.cod : 'New',
       val: props.invoice.val,
       std: (props.invoice.std || ''),
       dtString: dtString,
@@ -19,12 +19,19 @@ class InvoiceModal extends Component {
       cpAddressNeigh: (props.invoice.cp.address.neigh || null),
       cpAddressState: props.invoice.cp.address.state,
       cpAddressZip: props.invoice.cp.address.zip,
-      cpAddressCountry: props.invoice.cp.address.country
+      cpAddressCountry: props.invoice.cp.address.country,
+      upd: (props.invoice.cod === '0')
     }
+
+    console.log('upd=',this.state.upd)
   }
 
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value})
+  }
+
+  handleEdit() {
+    this.setState({upd: true});
   }
 
   recList =  this.props.invoice.recList.map(it => {
@@ -34,34 +41,42 @@ class InvoiceModal extends Component {
   })
 
   render() {
-    //const invoice = this.props.invoice
+    const invoice = this.props.invoice
+    const disabled = !this.state.upd
     return (
       <div className="modal form">
         <form>
         <div className="modal-content">
           <h2 className="item">Invoice</h2>
+          <nav className="item">
+            {
+              (!this.state.upd) &&
+              (<button type="button" className="btn btn-primary" onClick={() => this.handleEdit()}>Edit</button>)
+            }
+            <button type="button" className="btn btn-primary" onClick={(e) => {this.props.onModalCancel(invoice)}}>Cancel</button>
+          </nav>
           <div className="item-half">
             <label>
               Doc:
-              <input name="cod" value={this.state.cod} onChange={(e) => this.handleChange(e)} />
+              <input name="cod" value={this.state.cod} onChange={(e) => this.handleChange(e)} disabled maxLength={15} />
             </label>
           </div>
           <div className="item-half">
             <label>
               Val:
-              <input name="val" value={this.state.val} onChange={(e) => this.handleChange(e)} className="val" />
+              <input name="val" value={this.state.val} onChange={(e) => this.handleChange(e)} className="val" disabled={disabled} maxLength={15} />
             </label>
           </div>
           <div className="item-half">
           <label>
               Std:
-              <input name="std" value={this.state.std} onChange={(e) => this.handleChange(e)} />
+              <input name="std" value={this.state.std} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={15} />
             </label>
           </div>
           <div className="item-half">
             <label>
               Date:
-              <input name="dtString" value={this.state.dtString} onChange={(e) => this.handleChange(e)} />
+              <input name="dtString" value={this.state.dtString} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={10} />
             </label>
           </div>
           <div className="item">
@@ -71,65 +86,66 @@ class InvoiceModal extends Component {
           <div className="item-half">
             <label>
               Name:
-              <input name="cpName" value={this.state.cpName} onChange={(e) => this.handleChange(e)} />
+              <input name="cpName" value={this.state.cpName} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={30} />
             </label> 
           </div>
           <div className="item-half">
             <label>
               Cod:
-              <input name="cpCod" value={this.state.cpCod} onChange={(e) => this.handleChange(e)} />
+              <input name="cpCod" value={this.state.cpCod} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={6} />
             </label> 
           </div>
           <div className="item-half">
             <label>
             Address:
-              <input name="cpAddressAddr" value={this.state.cpAddressAddr} onChange={(e) => this.handleChange(e)} />
+              <input name="cpAddressAddr" value={this.state.cpAddressAddr} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={60} />
             </label>     
           </div>
           <div className="item-half">
             <label>
               City:
-              <input name="cpAddressCity" value={this.state.cpAddressCity} onChange={(e) => this.handleChange(e)} />
+              <input name="cpAddressCity" value={this.state.cpAddressCity} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={30} />
             </label>
           </div>
           { (this.state.cpAddressNeigh !== null) &&
             <div className="item-half">
               <label>
                 Neighborhood:
-                <input name="cpAddressNeigh" value={this.state.cpAddressNeigh} onChange={(e) => this.handleChange(e)} />
+                <input name="cpAddressNeigh" value={this.state.cpAddressNeigh} onChange={(e) => this.handleChange(e)} disabled={disabled} />
               </label>
             </div>
           }
           <div className="item-half">
             <label>
-              State:
-              <input name="cpAddressState" value={this.state.cpAddressState} onChange={(e) => this.handleChange(e)} />
+              State/Province:
+              <input name="cpAddressState" value={this.state.cpAddressState} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={2} pattern="[A-Z]{2}" />
             </label>
           </div>
           <div className="item-half">
             <label>
-              Zip:
-              <input name="cpAddressZip" value={this.state.cpAddressZip} onChange={(e) => this.handleChange(e)} />
+              Postal code:
+              <input name="cpAddressZip" value={this.state.cpAddressZip} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={6} />
             </label>
           </div>
           <div className="item-half">
             <label>
               Country:
-              <input name="cpCountry" value={this.state.cpAddressCountry} onChange={(e) => this.handleChange(e)} />
+              <input name="cpCountry" value={this.state.cpAddressCountry} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={4} />
             </label>
           </div>
           <ul className="item">
             {this.recList}
           </ul>
           <nav className="item">
-            <button type="button" className="btn btn-primary" onClick={(e) => {this.props.onModalCancel()}}>Cancel</button>
+            {
+              this.state.upd &&
+              (<button type="submit" className="btn btn-primary" onClick={(e) => {e.preventDefault(); this.props.onModalSubmit()}}>Submit</button>)
+            }
           </nav>
         </div>
         </form>
       </div>
     )
-    //<button type="submit" className="btn btn-primary" onClick={(e) => {e.preventDefault(); this.props.onModalSubmit(invoice)}}>Submit</button>
-
   }
 }
 

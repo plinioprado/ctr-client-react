@@ -9,7 +9,7 @@ const InvoiceItem = ({ item, onSelect }) => {
       <td key="cliCod">{item.cp.cod}</td>
       <td key="cliName">{item.cp.name}</td>
       <td key="dt">{dateString}</td>
-      <td key="val">{valString.toString()}</td>
+      <td key="val" align="right">{valString.toString()}</td>
     </tr>  
   )
 }

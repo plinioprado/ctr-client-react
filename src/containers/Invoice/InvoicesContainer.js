@@ -18,7 +18,6 @@ class InvoiceContainer extends Component {
   onModalSubmit = (data) => this.props.updInvoice(data)
 
   render() {
-    console.log(this.props);
     return (
       this.props.invoice.isLoading ?
       <p>Loading</p>
