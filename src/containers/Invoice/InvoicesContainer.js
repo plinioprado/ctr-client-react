@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getInvoices, getInvoice, updInvoice, resetInvoice } from '../../redux/modules/invoices'
+import { getInvoices, getInvoice, setInvoice, resetInvoice } from '../../redux/modules/invoices'
 
 import Invoice from '../../components/Invoice'
 
@@ -15,7 +15,28 @@ class InvoiceContainer extends Component {
 
   onModalCancel = () => this.props.resetInvoice()
 
-  onModalSubmit = (data) => this.props.updInvoice(data)
+  onModalSubmit = (form) => {
+    const data = {
+      cod: form.cod,
+      cp: {
+        address: {
+          addr: form.cpAddressAddr,
+          city: form.cpAddressCity,
+          country: form.cpAddressCountry,
+          neigh: form.cpAddressNeigh,
+          state: form.cpAddressState,
+          zip: form.cpAddressZip
+        },
+        cod: form.cpCod,
+        name: form.cpName
+      },
+      std: form.std,
+      dt: new Date(form.dtString),
+      recList: [{dt: '3920-03-02T08:00:00.000+00:00', val: 0}],
+      val: form.val
+    }
+    this.props.setInvoice(data)
+  }
 
   render() {
     return (
@@ -36,7 +57,7 @@ class InvoiceContainer extends Component {
 InvoiceContainer.PropTypes = {
   getInvoices: PropTypes.func.isRequired,
   getInvoice: PropTypes.func.isRequired,
-  updInvoice: PropTypes.func.isRequired,
+  setInvoice: PropTypes.func.isRequired,
   invoice: PropTypes.object.isRequired
 }
 
@@ -51,7 +72,7 @@ const mapDispatchToProps = dispatch => {
     getInvoices: () => dispatch(getInvoices()),
     getInvoice: (id) => dispatch(getInvoice(id)),
     resetInvoice: () => dispatch(resetInvoice()),
-    updInvoice: (data) => dispatch(updInvoice(data))
+    setInvoice: (data) => dispatch(setInvoice(data))
   }
 }
 

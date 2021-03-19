@@ -13,7 +13,6 @@ Served via REST by backends
 * ctr-server-node (Node + Express)
 * ctr-server-java (Java 8 + spring boot)
 
-
 ## Stack
 
 Frontend
@@ -36,8 +35,8 @@ Immaginare identity
 
 * Run in local client server:
 
-```
-$ npm run start
+``` terminal
+npm run start
 ```
 
 * Client server will open browser on localhost:3000

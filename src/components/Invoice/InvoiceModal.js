@@ -22,8 +22,6 @@ class InvoiceModal extends Component {
       cpAddressCountry: props.invoice.cp.address.country,
       upd: (props.invoice.cod === '0')
     }
-
-    console.log('upd=',this.state.upd)
   }
 
   handleChange(e) {
@@ -34,10 +32,10 @@ class InvoiceModal extends Component {
     this.setState({upd: true});
   }
 
-  recList =  this.props.invoice.recList.map(it => {
+  recList =  this.props.invoice.recList.map((it, key) => {
     const dateString2 = new Date(it.dtDue).toLocaleDateString()
     const valString = parseFloat(this.props.invoice.val).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
-    return (<li key={it._id}>{dateString2} : {valString}</li>)
+    return (<li key={key}>{dateString2} : {valString}</li>)
   })
 
   render() {
@@ -134,12 +132,15 @@ class InvoiceModal extends Component {
             </label>
           </div>
           <ul className="item">
-            {this.recList}
+            {
+            this.props.invoice.recList &&
+            this.recList
+            }
           </ul>
           <nav className="item">
             {
               this.state.upd &&
-              (<button type="submit" className="btn btn-primary" onClick={(e) => {e.preventDefault(); this.props.onModalSubmit()}}>Submit</button>)
+              (<button type="submit" className="btn btn-primary" onClick={(e) => {e.preventDefault(); this.props.onModalSubmit(this.state)}}>Submit</button>)
             }
           </nav>
         </div>
