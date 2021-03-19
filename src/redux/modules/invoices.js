@@ -1,12 +1,12 @@
 // Actions
 
 import config from '../../config.json'
+import helpers from '../../helpers/invoice'
 
 const GET_INVOICE_BEGIN = 'GET_INVOICE_BEGIN'
 const GET_INVOICES_SUCCESS = 'GET_INVOICES_SUCCESS'
 const GET_INVOICE_SUCCESS = 'GET_INVOICE_SUCCESS'
 const RESET_INVOICE = 'RESET_INVOICE'
-const UPD_INVOICE_SUCCESS = 'UPD_INVOICE_SUCCESS'
 const INVOICE_ERROR = 'INVOICE_ERROR'
 
 export const getInvoices = () => {
@@ -18,7 +18,7 @@ export const getInvoices = () => {
         {
           method: 'get',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            'Content-Type': 'application/json',
             'Authorization': '123321'
           }
         }
@@ -39,25 +39,44 @@ export const resetInvoice = () => {
   }
 }
 
-export const updInvoice = (data) => {
+export const setInvoice = (data) => {
   return dispatch => {
-    dispatch(updInvoiceSuccess(data))
+    try {
+      dispatch(getInvoiceBegin())
+      fetch(
+        `${config.requestUrlBase}/invoice`,
+        {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': '123321'
+          },
+          body: JSON.stringify(data)
+        }
+      )
+      .then(res => res.json())
+      .then(json => dispatch(getInvoicesSuccess(json)))
+      .catch(err => { throw err })
+    } catch(error) {
+      console.log('error', error)
+      dispatch(getInvoiceError(error))
+    }
   }
 }
 
-const updInvoiceSuccess = (data) => {
-  return {
-    type: UPD_INVOICE_SUCCESS
-  }
-}
 
 export const getInvoice = (id) => {
   return dispatch => {
     try {
-      fetch(`${config.requestUrlBase}/invoice/${id}`)
-        .then(res => res.json())
-        .then(json => dispatch(getInvoiceSuccess(json)))
-        .catch(err => { throw err })
+      if (id === 0) {
+        const json = helpers.newInvoice()
+        dispatch(getInvoiceSuccess(json))
+      } else {
+        fetch(`${config.requestUrlBase}/invoice/${id}`)
+          .then(res => res.json())
+          .then(json => dispatch(getInvoiceSuccess(json)))
+          .catch(err => { throw err })
+      }
     } catch(error) {
       console.log('error', error)
       dispatch(getInvoiceError(error))
@@ -107,7 +126,8 @@ export const invoiceReducer = (state = initialState, action) => {
       return {
         ...state,
         list: action.data,
-        isLoading: false
+        isLoading: false,
+        invoice: null
         }
     case 'GET_INVOICE_SUCCESS':
         return {
@@ -122,11 +142,6 @@ export const invoiceReducer = (state = initialState, action) => {
         isLoading: false
         }
     case 'RESET_INVOICE':
-      return {
-        ...state,
-        invoice: null
-        }
-    case 'UPD_INVOICE_SUCCESS':
       return {
         ...state,
         invoice: null

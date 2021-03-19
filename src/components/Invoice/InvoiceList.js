@@ -6,6 +6,9 @@ import InvoiceModal from './InvoiceModal'
  const InvoiceList = ({ list, invoice, onSelect, onModalCancel, onModalSubmit }) => (
      <div>
       <h2>Invoices and revenues</h2>
+      <nav className="navbar pull-right">
+        <button type="submit" className="btn btn-primary" onClick={(e) => {e.preventDefault(); onSelect(0)}}>New</button>
+      </nav>
       <table className="table">
         <thead>
           <tr>

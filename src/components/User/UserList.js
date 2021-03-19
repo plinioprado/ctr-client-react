@@ -31,7 +31,7 @@ class UserList extends Component {
           </thead>
           <tbody>
           {
-            list.map(item => <UserItem item={item} />)
+            list.map(item => <UserItem key={item.num} item={item} />)
           }
           </tbody>
         </table>
