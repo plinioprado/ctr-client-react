@@ -7,8 +7,6 @@ const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGIN_ERROR = 'LOGIN_ERROR'
 
 export function login(email, pass) {
-  console.log('email=', email)
-  console.log('pass=', pass)
   return dispatch => {
     fetch(`${config.requestUrlBase}/login`, {
       method: 'post',
