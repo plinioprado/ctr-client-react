@@ -16,8 +16,9 @@ const helpers = {
         cod: '',
         name: ''
       },
-      dt: '3920-02-02T08:00:00.000+00:00',
-      recList: [{dt: '3920-03-02T08:00:00.000+00:00', val: 0}]
+      val: 0,
+      dt: new Date(),
+      recList: [{seq: 1, dtDue: new Date(), val: 0}]
     }
   }
 }

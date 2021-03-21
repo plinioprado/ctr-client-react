@@ -41,12 +41,14 @@ export const resetInvoice = () => {
 
 export const setInvoice = (data) => {
   return dispatch => {
+    console.log('in setInvoice, data=', data)
     try {
       dispatch(getInvoiceBegin())
+      const fetchMethod = data.cod === '0' ? 'post' : 'put'
       fetch(
         `${config.requestUrlBase}/invoice`,
         {
-          method: 'post',
+          method: fetchMethod,
           headers: {
             'Content-Type': 'application/json',
             'Authorization': '123321'
@@ -72,11 +74,37 @@ export const getInvoice = (id) => {
         const json = helpers.newInvoice()
         dispatch(getInvoiceSuccess(json))
       } else {
-        fetch(`${config.requestUrlBase}/invoice/${id}`)
+        fetch(`${config.requestUrlBase}/invoice/${id}`,
+          {
+            method: 'get',
+            headers: {
+              'Authorization': '123321'
+            }
+          })
           .then(res => res.json())
           .then(json => dispatch(getInvoiceSuccess(json)))
           .catch(err => { throw err })
       }
+    } catch(error) {
+      console.log('error', error)
+      dispatch(getInvoiceError(error))
+    }
+  }
+}
+
+export const deleteInvoice = (id) => {
+  return dispatch => {
+    try {
+      fetch(`${config.requestUrlBase}/invoice/${id}`,
+        {
+          method: 'delete',
+          headers: {
+            'Authorization': '123321'
+          }
+        })
+        .then(res => res.json())
+        .then(json => dispatch(getInvoicesSuccess(json)))
+        .catch(err => { throw err })
     } catch(error) {
       console.log('error', error)
       dispatch(getInvoiceError(error))

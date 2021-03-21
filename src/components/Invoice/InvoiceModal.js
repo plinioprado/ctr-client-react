@@ -6,12 +6,15 @@ class InvoiceModal extends Component {
 
   constructor(props) {
     super(props)
-    const dtString = new Date(props.invoice.dt).toLocaleDateString()
-    this.state = {
+    this.state = this.getInvoiceStateFromData(props)
+  }
+
+  getInvoiceStateFromData(props) {
+    return {
       cod: props.invoice.cod > 0 ? props.invoice.cod : 'New',
-      val: props.invoice.val,
+      val: this.formatVal(props.invoice.val),
       std: (props.invoice.std || ''),
-      dtString: dtString,
+      dtString: this.formatDate(props.invoice.dt),
       cpName: props.invoice.cp.name,
       cpCod: props.invoice.cp.cod,
       cpAddressAddr: props.invoice.cp.address.addr,
@@ -20,7 +23,40 @@ class InvoiceModal extends Component {
       cpAddressState: props.invoice.cp.address.state,
       cpAddressZip: props.invoice.cp.address.zip,
       cpAddressCountry: props.invoice.cp.address.country,
+      recList: props.invoice.recList,
       upd: (props.invoice.cod === '0')
+    }
+  }
+
+  formatDate(date) {
+    // should take date as string in iso format
+    return new Date(date).toLocaleDateString('en-US',{year:"numeric", month:"2-digit", day:"2-digit"})
+  }
+
+  formatVal(val) {
+    return parseFloat(val)
+      .toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
+  }
+
+  getInvoiceDataFromState(form) {
+    return {
+      cod: form.cod === 'New' ? '0' : form.cod,
+      cp: {
+        address: {
+          addr: form.cpAddressAddr,
+          city: form.cpAddressCity,
+          country: form.cpAddressCountry,
+          neigh: form.cpAddressNeigh,
+          state: form.cpAddressState,
+          zip: form.cpAddressZip
+        },
+        cod: form.cpCod,
+        name: form.cpName
+      },
+      std: form.std,
+      dt: new Date(form.dtString),
+      recList: [{seq: 1, dt: new Date(form.dtString), val: 0}],
+      val: parseFloat(form.val.replace(',',''))
     }
   }
 
@@ -28,18 +64,27 @@ class InvoiceModal extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
-  handleEdit() {
-    this.setState({upd: true});
+  handleChangeVal(e) {
+    this.setState({'val': e.target.value})
+    this.setState({'recList': [
+      {seq: 1, dtDue: this.state.recList[0].dtDue, val: e.target.value}
+    ]})
   }
 
-  recList =  this.props.invoice.recList.map((it, key) => {
-    const dateString2 = new Date(it.dtDue).toLocaleDateString()
-    const valString = parseFloat(this.props.invoice.val).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
-    return (<li key={key}>{dateString2} : {valString}</li>)
-  })
+  handleDelete() {
+    this.props.onModalDelete(this.state.cod)
+  }
+
+  handleEdit() {
+    this.setState({upd: true})
+  }
+
+  handleSubmit() {
+    const data = this.getInvoiceDataFromState(this.state)
+    this.props.onModalSubmit(data)
+  }
 
   render() {
-    const invoice = this.props.invoice
     const disabled = !this.state.upd
     return (
       <div className="modal form">
@@ -51,7 +96,8 @@ class InvoiceModal extends Component {
               (!this.state.upd) &&
               (<button type="button" className="btn btn-primary" onClick={() => this.handleEdit()}>Edit</button>)
             }
-            <button type="button" className="btn btn-primary" onClick={(e) => {this.props.onModalCancel(invoice)}}>Cancel</button>
+            <button type="button" className="btn btn-primary" onClick={() => this.handleDelete()}>Delete</button>
+            <button type="button" className="btn btn-primary" onClick={(e) => {this.props.onModalCancel()}}>Cancel</button>
           </nav>
           <div className="item-half">
             <label>
@@ -62,7 +108,7 @@ class InvoiceModal extends Component {
           <div className="item-half">
             <label>
               Val:
-              <input name="val" value={this.state.val} onChange={(e) => this.handleChange(e)} className="val" disabled={disabled} maxLength={15} />
+              <input name="val" value={this.state.val} onChange={(e) => this.handleChangeVal(e)} className="val" disabled={disabled} maxLength={15} />
             </label>
           </div>
           <div className="item-half">
@@ -128,19 +174,21 @@ class InvoiceModal extends Component {
           <div className="item-half">
             <label>
               Country:
-              <input name="cpCountry" value={this.state.cpAddressCountry} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={4} />
+              <input name="cpAddressCountry" value={this.state.cpAddressCountry} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={4} />
             </label>
           </div>
           <ul className="item">
-            {
-            this.props.invoice.recList &&
-            this.recList
+            {(this.state.recList || []).map((it, key) => {
+              const dtDueString = this.formatDate(it.dtDue)
+              const valString = this.formatVal(it.val)
+              return (<li key={key}>{dtDueString} : {valString}</li>)
+            })
             }
           </ul>
           <nav className="item">
             {
               this.state.upd &&
-              (<button type="submit" className="btn btn-primary" onClick={(e) => {e.preventDefault(); this.props.onModalSubmit(this.state)}}>Submit</button>)
+              (<button type="submit" className="btn btn-primary" onClick={(e) => {e.preventDefault(); this.handleSubmit()}}>Submit</button>)
             }
           </nav>
         </div>
@@ -152,6 +200,7 @@ class InvoiceModal extends Component {
 
 InvoiceModal.PropTypes = {
   onModalCancel: PropTypes.func.isRequired,
+  onModalDelete: PropTypes.func.isRequired,
   onModalSubmit: PropTypes.func.isRequired
 }
 
