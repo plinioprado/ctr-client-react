@@ -38,6 +38,10 @@ class InvoiceModal extends Component {
       .toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
   }
 
+  unFormatVal(val) {
+    return parseFloat(val.replace(',',''))
+  }
+
   getInvoiceDataFromState(form) {
     return {
       cod: form.cod === 'New' ? '0' : form.cod,
@@ -65,10 +69,18 @@ class InvoiceModal extends Component {
   }
 
   handleChangeVal(e) {
-    this.setState({'val': e.target.value})
-    this.setState({'recList': [
-      {seq: 1, dtDue: this.state.recList[0].dtDue, val: e.target.value}
-    ]})
+    this.setState({[e.target.name]: e.target.value})
+    let recValLast = this.unFormatVal(e.target.value)
+    const newRecList = this.state.recList.map((rec, k, arr) => {
+      const isLast = k === (arr.length - 1)
+      if (!isLast) recValLast -= rec.val
+      return {
+        sec: rec.sec,
+        dtDue: rec.dtDue,
+        val: isLast ? recValLast : rec.val
+      }
+    })
+    this.setState({recList: newRecList})
   }
 
   handleDelete() {
@@ -177,14 +189,38 @@ class InvoiceModal extends Component {
               <input name="cpAddressCountry" value={this.state.cpAddressCountry} onChange={(e) => this.handleChange(e)} disabled={disabled} maxLength={4} />
             </label>
           </div>
-          <ul className="item">
-            {(this.state.recList || []).map((it, key) => {
-              const dtDueString = this.formatDate(it.dtDue)
-              const valString = this.formatVal(it.val)
-              return (<li key={key}>{dtDueString} : {valString}</li>)
-            })
-            }
-          </ul>
+          <div className="item-half">
+            <table className="table">
+              <tbody>
+              {(
+                this.state.recList || []).map((it, key, arr) => {
+                const dtDueString = this.formatDate(it.dtDue)
+                const valString = this.formatVal(it.val)
+                return (
+                  <tr key={key}>
+                    <td>{key + 1}</td>
+                    <td>
+                      <input
+                        name="rec{key}-dtDue"
+                        value={dtDueString}
+                        onChange={(e) => this.handleChange(e)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        name="rec{key}-val"
+                        className="val"
+                        //disabled={(key === (arr.length - 1))}
+                        value={valString}
+                        onChange={(e) => this.handleChange(e)}
+                      />
+                    </td>
+                  </tr>)
+              })
+              }
+              </tbody>
+            </table>
+          </div>
           <nav className="item">
             {
               this.state.upd &&
@@ -197,6 +233,8 @@ class InvoiceModal extends Component {
     )
   }
 }
+
+
 
 InvoiceModal.PropTypes = {
   onModalCancel: PropTypes.func.isRequired,
